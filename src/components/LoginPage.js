@@ -17,6 +17,9 @@ class LoginPage extends React.Component {
 	handleLogin = async () => {
 		const formInstance = this.formRef.current
 
+		// These try catch block is equivalent to 
+		// formInstance.validateFields().then(() => {}).catch(() => {})
+		// it's syntactic sugar
 		try {
 			await formInstance.validateFields()
 		} catch (error) {
@@ -28,8 +31,9 @@ class LoginPage extends React.Component {
 		})
 
 		try {
-			const { asHost } = this.state
+			const { asHost } = this.state  // ES6 destructuring. Equivalent to "const asHost = this.state.asHost"
 			const resp = await login(formInstance.getFieldsValue(true), asHost)
+			// next line, means handleLoginSuccess is defined on this component's parent and passed down by <LoginPage handleLoginSuccess = ...>
 			this.props.handleLoginSuccess(resp.token, asHost)
 		} catch (error) {
 			message.error(error.message)

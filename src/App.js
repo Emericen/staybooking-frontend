@@ -72,7 +72,7 @@ class App extends React.Component {
 			<Layout style={{ height: "100vh" }}>
 				<Header style={{ display: "flex", justifyContent: "space-between" }}>
 					<div style={{ fontSize: 16, fontWeight: 600, color: "white" }}>
-						Stays Booking
+						StayBooking
 					</div>
 					{this.state.authed && (
 						<div>
@@ -82,6 +82,8 @@ class App extends React.Component {
 						</div>
 					)}
 				</Header>
+				{/* note: here the 64px is the header space.*/}
+				{/* It is a constant and most websites has header height fixed, unaffected by zoom in and outs */}
 				<Content
 					style={{ height: "calc(100% - 64px)", margin: 20, overflow: "auto" }}
 				>

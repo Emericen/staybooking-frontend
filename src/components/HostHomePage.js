@@ -1,6 +1,23 @@
+import {
+	message,
+	Tabs,
+	List,
+	Card,
+	Image,
+	Carousel,
+	Button,
+	Tooltip,
+	Space,
+	Modal,
+} from "antd";
+import {
+	LeftCircleFilled,
+	RightCircleFilled,
+	InfoCircleOutlined,
+} from "@ant-design/icons";
+import Text from "antd/lib/typography/Text";
 import React from "react";
-import { Tabs } from "antd";
-
+import { getStaysByHost } from "../utils";
 const { TabPane } = Tabs;
 
 class HostHomePage extends React.Component {
@@ -8,7 +25,7 @@ class HostHomePage extends React.Component {
 		return (
 			<Tabs defaultActiveKey="1" destroyInactiveTabPane={true}>
 				<TabPane tab="My Stays" key="1">
-					<div>My Stays Content</div>
+					<MyStays />
 				</TabPane>
 				<TabPane tab="Upload Stay" key="2">
 					<div>Upload Stays</div>
@@ -21,8 +38,9 @@ class HostHomePage extends React.Component {
 
 export class StayDetailInfoButton extends React.Component {
 	render() {
-		return <></>;
+		return <></>
 	}
+
 }
 
 class MyStays extends React.Component {
@@ -35,6 +53,8 @@ class MyStays extends React.Component {
 		this.loadData();
 	}
 
+
+	// List flutter, you can only use await when you declare async
 	loadData = async () => {
 		this.setState({
 			loading: true,

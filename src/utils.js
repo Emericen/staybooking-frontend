@@ -1,4 +1,4 @@
-const domain = "the url you deployed your backend to";
+const domain = "";
 
 export const login = (credential, asHost) => {
 	const loginUrl = `${domain}/authenticate/${asHost ? "host" : "guest"}`;
@@ -64,6 +64,7 @@ export const getStaysByHost = () => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
+			console.log(response.status)
 			throw Error("Fail to get stay list")
 		}
 
