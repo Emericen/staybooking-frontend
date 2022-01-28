@@ -2,23 +2,28 @@ const domain = "the url you deployed your backend to";
 
 export const login = (credential, asHost) => {
 	const loginUrl = `${domain}/authenticate/${asHost ? "host" : "guest"}`;
+
+	// Fetch is global web api 
+	// it comes w the browswer so doesn't need an import. Browser has its implementation, which is unknown to us developers
+	// fetch takes 2 params, request desternation and request configuration
 	return fetch(loginUrl, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(credential),
+		body: JSON.stringify(credential),    // make credential json into a string
 	}).then((response) => {
+		// function passed in then() will run AFTER response comes back
 		if (response.status !== 200) {
 			throw Error("Fail to log in");
 		}
 
 		return response.json();
-	});
-};
+	})
+}
 
 export const register = (credential, asHost) => {
-	const registerUrl = `${domain}/register/${asHost ? "host" : "guest"}`;
+	const registerUrl = `${domain}/register/${asHost ? "host" : "guest"}`
 	return fetch(registerUrl, {
 		method: "POST",
 		headers: {
@@ -27,14 +32,14 @@ export const register = (credential, asHost) => {
 		body: JSON.stringify(credential),
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to register");
+			throw Error("Fail to register")
 		}
-	});
-};
+	})
+}
 
 export const getReservations = () => {
-	const authToken = localStorage.getItem("authToken");
-	const listReservationsUrl = `${domain}/reservations`;
+	const authToken = localStorage.getItem("authToken")
+	const listReservationsUrl = `${domain}/reservations`
 
 	return fetch(listReservationsUrl, {
 		headers: {
@@ -42,16 +47,16 @@ export const getReservations = () => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to get reservation list");
+			throw Error("Fail to get reservation list")
 		}
 
-		return response.json();
-	});
-};
+		return response.json()
+	})
+}
 
 export const getStaysByHost = () => {
-	const authToken = localStorage.getItem("authToken");
-	const listStaysUrl = `${domain}/stays/`;
+	const authToken = localStorage.getItem("authToken")
+	const listStaysUrl = `${domain}/stays/`
 
 	return fetch(listStaysUrl, {
 		headers: {
@@ -59,27 +64,27 @@ export const getStaysByHost = () => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to get stay list");
+			throw Error("Fail to get stay list")
 		}
 
-		return response.json();
-	});
-};
+		return response.json()
+	})
+}
 
 export const searchStays = (query) => {
-	const authToken = localStorage.getItem("authToken");
-	const searchStaysUrl = new URL(`${domain}/search/`);
-	searchStaysUrl.searchParams.append("guest_number", query.guest_number);
+	const authToken = localStorage.getItem("authToken")
+	const searchStaysUrl = new URL(`${domain}/search/`)
+	searchStaysUrl.searchParams.append("guest_number", query.guest_number)
 	searchStaysUrl.searchParams.append(
 		"checkin_date",
 		query.checkin_date.format("YYYY-MM-DD")
-	);
+	)
 	searchStaysUrl.searchParams.append(
 		"checkout_date",
 		query.checkout_date.format("YYYY-MM-DD")
-	);
-	searchStaysUrl.searchParams.append("lat", 37);
-	searchStaysUrl.searchParams.append("lon", -122);
+	)
+	searchStaysUrl.searchParams.append("lat", 37)
+	searchStaysUrl.searchParams.append("lon", -122)
 
 	return fetch(searchStaysUrl, {
 		headers: {
@@ -87,16 +92,16 @@ export const searchStays = (query) => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to search stays");
+			throw Error("Fail to search stays")
 		}
 
-		return response.json();
-	});
-};
+		return response.json()
+	})
+}
 
 export const deleteStay = (stayId) => {
-	const authToken = localStorage.getItem("authToken");
-	const deleteStayUrl = `${domain}/stays/${stayId}`;
+	const authToken = localStorage.getItem("authToken")
+	const deleteStayUrl = `${domain}/stays/${stayId}`
 
 	return fetch(deleteStayUrl, {
 		method: "DELETE",
@@ -105,14 +110,14 @@ export const deleteStay = (stayId) => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to delete stay");
+			throw Error("Fail to delete stay")
 		}
-	});
-};
+	})
+}
 
 export const bookStay = (data) => {
-	const authToken = localStorage.getItem("authToken");
-	const bookStayUrl = `${domain}/reservations`;
+	const authToken = localStorage.getItem("authToken")
+	const bookStayUrl = `${domain}/reservations`
 
 	return fetch(bookStayUrl, {
 		method: "POST",
@@ -123,14 +128,14 @@ export const bookStay = (data) => {
 		body: JSON.stringify(data),
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to book reservation");
+			throw Error("Fail to book reservation")
 		}
-	});
-};
+	})
+}
 
 export const cancelReservation = (reservationId) => {
 	const authToken = localStorage.getItem("authToken");
-	const cancelReservationUrl = `${domain}/reservations/${reservationId}`;
+	const cancelReservationUrl = `${domain}/reservations/${reservationId}`
 
 	return fetch(cancelReservationUrl, {
 		method: "DELETE",
@@ -139,14 +144,14 @@ export const cancelReservation = (reservationId) => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to cancel reservation");
+			throw Error("Fail to cancel reservation")
 		}
-	});
-};
+	})
+}
 
 export const getReservationsByStay = (stayId) => {
-	const authToken = localStorage.getItem("authToken");
-	const getReservationByStayUrl = `${domain}/stays/reservations/${stayId}`;
+	const authToken = localStorage.getItem("authToken")
+	const getReservationByStayUrl = `${domain}/stays/reservations/${stayId}`
 
 	return fetch(getReservationByStayUrl, {
 		headers: {
@@ -154,16 +159,16 @@ export const getReservationsByStay = (stayId) => {
 		},
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to get reservations by stay");
+			throw Error("Fail to get reservations by stay")
 		}
 
 		return response.json();
-	});
-};
+	})
+}
 
 export const uploadStay = (data) => {
-	const authToken = localStorage.getItem("authToken");
-	const uploadStayUrl = `${domain}/stays`;
+	const authToken = localStorage.getItem("authToken")
+	const uploadStayUrl = `${domain}/stays`
 
 	return fetch(uploadStayUrl, {
 		method: "POST",
@@ -173,7 +178,7 @@ export const uploadStay = (data) => {
 		body: data,
 	}).then((response) => {
 		if (response.status !== 200) {
-			throw Error("Fail to upload stay");
+			throw Error("Fail to upload stay")
 		}
-	});
-};
+	})
+}
